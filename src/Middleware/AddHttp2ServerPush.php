@@ -100,13 +100,7 @@ class AddHttp2ServerPush
     {
         $linkTypeMap = [
             '.CSS'  => 'style',
-            '.JS'   => 'script',
-            '.BMP'  => 'image',
-            '.GIF'  => 'image',
-            '.JPG'  => 'image',
-            '.JPEG' => 'image',
-            '.PNG'  => 'image',
-            '.TIFF' => 'image',
+            '.JS'   => 'script'
         ];
 
         $type = collect($linkTypeMap)->first(function ($type, $extension) use ($url) {
