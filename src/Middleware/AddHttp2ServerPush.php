@@ -28,7 +28,7 @@ class AddHttp2ServerPush
     {
         $response = $next($request);
 
-        if ($response->isRedirection() || !$response instanceof Response || $request->isJson()) {
+        if ($response->isRedirection() || ! $response instanceof Response || $request->isJson()) {
             return $response;
         }
 
@@ -51,7 +51,7 @@ class AddHttp2ServerPush
             })->filter()
             ->implode(',');
 
-        if (!empty(trim($headers))) {
+        if (! empty(trim($headers))) {
             $this->addLinkHeader($response, $headers);
         }
 
