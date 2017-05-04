@@ -9,7 +9,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class AddHttp2ServerPush
 {
-
     /**
      * The DomCrawler instance.
      *
@@ -21,7 +20,7 @@ class AddHttp2ServerPush
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param \Closure                 $next
      *
      * @return mixed
      */
@@ -100,7 +99,7 @@ class AddHttp2ServerPush
     {
         $linkTypeMap = [
             '.CSS'  => 'style',
-            '.JS'   => 'script'
+            '.JS'   => 'script',
         ];
 
         $type = collect($linkTypeMap)->first(function ($type, $extension) use ($url) {
@@ -108,19 +107,16 @@ class AddHttp2ServerPush
         });
 
         return is_null($type) ? null : "<{$url}>; rel=preload; as={$type}";
-
     }
 
     /**
-     * Add Link Header
+     * Add Link Header.
      *
      * @param \Illuminate\Http\Response $response
-     *
      * @param $link
      */
     private function addLinkHeader(Response $response, $link)
     {
         $response->header('Link', $link);
     }
-
 }
