@@ -6,11 +6,9 @@ namespace JacobBennett\Http2ServerPush\Test;
 
 use Illuminate\Http\Request;
 use JacobBennett\Http2ServerPush\Middleware\AddHttp2ServerPush;
-use Symfony\Component\HttpFoundation\Response;
 
 class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 {
-
     public function setUp()
     {
         $this->middleware = new AddHttp2ServerPush();
@@ -21,7 +19,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request();
 
-        $response = $this->middleware->handle($request, $this->getNext("pageWithoutAssets"));
+        $response = $this->middleware->handle($request, $this->getNext('pageWithoutAssets'));
 
         $this->assertFalse($this->isServerPushResponse($response));
     }
@@ -34,7 +32,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $response = $this->middleware->handle($request, $this->getNext('pageWithCss'));
 
         $this->assertTrue($this->isServerPushResponse($response));
-        $this->assertStringEndsWith("as=style", $response->headers->get('link'));
+        $this->assertStringEndsWith('as=style', $response->headers->get('link'));
     }
 
     /** @test */
@@ -45,7 +43,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $response = $this->middleware->handle($request, $this->getNext('pageWithJs'));
 
         $this->assertTrue($this->isServerPushResponse($response));
-        $this->assertStringEndsWith("as=script", $response->headers->get('link'));
+        $this->assertStringEndsWith('as=script', $response->headers->get('link'));
     }
 
     /** @test */
@@ -56,8 +54,8 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $response = $this->middleware->handle($request, $this->getNext('pageWithImages'));
 
         $this->assertTrue($this->isServerPushResponse($response));
-        $this->assertStringEndsWith("as=image", $response->headers->get('link'));
-        $this->assertCount(6, explode(",", $response->headers));
+        $this->assertStringEndsWith('as=image', $response->headers->get('link'));
+        $this->assertCount(6, explode(',', $response->headers));
     }
 
     /** @test */
@@ -67,7 +65,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->middleware->handle($request, $this->getNext('pageWithCss'));
 
-        $this->assertEquals("<css/test.css>; rel=preload; as=style", $response->headers->get('link'));
+        $this->assertEquals('<css/test.css>; rel=preload; as=style', $response->headers->get('link'));
     }
 
     /** @test */
@@ -80,7 +78,7 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->isServerPushResponse($response));
         $this->assertTrue(str_contains($response->headers, 'style'));
         $this->assertTrue(str_contains($response->headers, 'script'));
-        $this->assertCount(2, explode(",", $response->headers));
+        $this->assertCount(2, explode(',', $response->headers));
     }
 
     /** @test */
@@ -105,7 +103,6 @@ class AddHttp2ServerPushTest extends \PHPUnit_Framework_TestCase
         $response = (new \Illuminate\Http\Response($html));
 
         return function ($request) use ($response) {
-
             return $response;
         };
     }
